@@ -62,10 +62,6 @@ const processor = {
             CiphertextBlob: new Buffer( owner_key.encrypted, 'base64' )
         } ).promise();
 
-        if ( decrypted.KeyId !== this.options.aws_kms_key_id ) {
-            throw new Error( 'mismatched aws kms parent key ids' );
-        }
-
         owner_key.plaintext = decrypted.Plaintext.toString( 'base64' );
 
         return owner_key;
