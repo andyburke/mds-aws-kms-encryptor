@@ -35,9 +35,9 @@ const processor = {
         return ( Buffer.concat( [ cipher.update( plaintext, encoding ), cipher.final() ] ) ).toString( 'base64' );
     },
 
-    _decrypt: function( key, ciphertext, encoding = 'base64' ) {
+    _decrypt: function( key, ciphertext, encoding = 'base64', decoding = 'base64' ) {
         const decipher = crypto.createDecipher( CIPHER, new Buffer( key, 'base64' ) );
-        return ( Buffer.concat( [ decipher.update( ciphertext, encoding ), decipher.final() ] ) ).toString( 'base64' );
+        return ( Buffer.concat( [ decipher.update( ciphertext, encoding ), decipher.final() ] ) ).toString( decoding );
     },
 
     _get_owner_key: async function( object ) {
@@ -91,7 +91,7 @@ const processor = {
         return {
             _encrypted: encrypted_object,
             _encrypted_data_key: data_key.encrypted,
-            _encrypted_owner_key: owner_key.encrypted
+            _encrypted_owner_key: data_key.owner_key.encrypted
         };
     },
 
@@ -102,7 +102,7 @@ const processor = {
 
         const owner_key_plaintext = decrypted_owner_key.Plaintext.toString( 'base64' );
         const data_key_plaintext = this._decrypt( owner_key_plaintext, encrypted._encrypted_data_key );
-        const data_plaintext = this._decrypt( data_key_plaintext, encrypted._encrypted );
+        const data_plaintext = this._decrypt( data_key_plaintext, encrypted._encrypted, 'base64', 'utf8' );
         const decrypted = JSON.parse( data_plaintext );
         return decrypted;
     },

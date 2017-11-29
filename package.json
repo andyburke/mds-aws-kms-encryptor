@@ -1,6 +1,6 @@
 {
   "name": "mds-aws-kms-encryptor",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "AWS KMS-based encryption processor",
   "main": "index.js",
   "dependencies": {
