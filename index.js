@@ -87,7 +87,7 @@ const processor = {
         return ( typeof value !== 'undefined' && value !== null ) ? crypto.createHash( 'sha256' ).update( value, 'utf8' ).digest( 'base64' ) : value;
     },
 
-    encrypt: function( object ) {
+    encrypt: async function( object ) {
         const stringified_object = JSON.stringify( object );
         const data_key = await this._get_data_key( object );
         const encrypted_object = this._encrypt( data_key.plaintext, stringified_object, 'utf8' );
@@ -99,7 +99,7 @@ const processor = {
         };
     },
 
-    decrypt: function( encrypted ) {
+    decrypt: async function( encrypted ) {
         const decrypted_owner_key = await this.kms.decrypt( {
             CiphertextBlob: new Buffer( encrypted._encrypted_owner_key, 'base64' )
         } ).promise();
