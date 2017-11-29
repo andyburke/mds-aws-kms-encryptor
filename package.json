@@ -1,0 +1,16 @@
+{
+  "name": "mds-aws-kms-encryptor",
+  "version": "1.0.0",
+  "description": "AWS KMS-based encryption processor",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.158.0",
+    "extend": "^3.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andy Burke <andy.burke@mailbox.earth>",
+  "license": "MIT"
+}
