@@ -55,7 +55,7 @@ const processor = {
                 created_at: new Date().toISOString()
             };
 
-            await this.keystore.put( owner_key );
+            await this.options.keystore.put( owner_key );
         }
 
         const decrypted = await this.kms.decrypt( {
