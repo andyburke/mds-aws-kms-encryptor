@@ -2,6 +2,7 @@
 
 const AWS = require( 'aws-sdk' );
 const crypto = require( 'crypto' );
+const Delver = require( 'delver' );
 const extend = require( 'extend' );
 
 const CIPHER = 'aes256';
@@ -111,14 +112,14 @@ const processor = {
         const encrypted = await this.encrypt( object );
         const processed = extend( true, {}, encrypted );
 
-        // TODO: use traverse for better control?
+        // using delver to support paths like foo.bar.baz
 
         this.options.fields.hash.forEach( field => {
-            processed[ field ] = this.hash( object[ field ] );
+            Delver.set( processed, field, this.hash( Delver.get( object, field ) ) );
         } );
 
         this.options.fields.pass.forEach( field => {
-            processed[ field ] = object[ field ];
+            Delver.set( processed, field, Delver.get( object, field ) );
         } );
 
         return processed;
